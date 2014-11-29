@@ -1,0 +1,31 @@
+<h1>Listing tasks</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Completed</th>
+      <th>Deadline</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @tasks.each do |task| %>
+      <%= content_tag :tr, class: (task.deadline.past? ? "danger" : "success") do -%>
+        <td><%= task.name %></td>
+        <td><%= task.description %></td>
+        <td> <% if task.completed %><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> <%end%></td>
+        <td><%= localize task.deadline, format: :long%></td>
+        <td><%= link_to 'Show', task, class:"btn btn-moje" %></td>
+        <td><%= link_to 'Edit', edit_task_path(task), class:"btn btn-default" %></td>
+        <td><%= link_to 'Destroy', task, class:"btn btn-default", method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Task', new_task_path %>
